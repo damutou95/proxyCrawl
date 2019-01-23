@@ -1,4 +1,3 @@
 import os
 while True:
-    print('#########################')
-    os.system("cd; cd proxyCrawl; scrapy crawl getIp")
+    os.system("python3 /home/xiyujing/proxyCrawl/proxyCrawl/spiders/updateProxy.py")
