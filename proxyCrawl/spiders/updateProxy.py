@@ -13,7 +13,7 @@ cursor = db.cursor()
 sql2 = f"select * from {tablename}"
 cursor.execute(sql2)
 results = cursor.fetchall()
-if len(results) < 230:
+if len(results) < 180:
     sql = f"truncate table {tablename}"
     cursor.execute(sql)
     # cursor.commit()
