@@ -4,9 +4,10 @@
 #
 # See documentation in:
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
-
+from twisted.internet.error import TimeoutError, ConnectionLost, TCPTimedOutError, ConnectionRefusedError, ConnectError
 from scrapy import signals
 from scrapy.http import Response
+
 
 class ProxycrawlSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
@@ -97,7 +98,7 @@ class ProxycrawlDownloaderMiddleware(object):
         # - return None: continue processing this exception
         # - return a Response object: stops process_exception() chain
         # - return a Request object: stops process_exception() chain
-        if exception in [TimeoutError, ConnectionError, ConnectionRefusedError]:
+        if isinstance(exception, (TimeoutError, ConnectionLost, TCPTimedOutError, ConnectionRefusedError, ConnectError, ConnectionError, AttributeError)):
             response = Response(request=request, body='error')
             return response
 

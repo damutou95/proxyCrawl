@@ -5,6 +5,7 @@
 # import pymysql
 # import hashlib
 # import json
+# import csv
 # from scrapy import Request
 #
 # class GetipSpider(scrapy.Spider):
@@ -16,7 +17,6 @@
 #     passwd = '18351962092'
 #     dbname = 'proxies'
 #     tablename = 'proxy'
-#     proxySet = []
 #
 #     def start_requests(self):
 #         db = pymysql.connect(self.host, self.user, self.passwd, self.dbname)

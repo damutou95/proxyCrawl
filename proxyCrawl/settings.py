@@ -78,9 +78,9 @@ DOWNLOAD_DELAY = 0.1
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'proxyCrawl.middlewares.ProxycrawlDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+    'proxyCrawl.middlewares.ProxycrawlDownloaderMiddleware': 543,
+}
 DOWNLOAD_TIMEOUT = 30
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html

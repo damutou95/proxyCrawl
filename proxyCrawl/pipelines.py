@@ -4,9 +4,9 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-import pymysql
 import hashlib
 import time
+import logging
 from pymysql import cursors
 from twisted.enterprise import adbapi
 from proxyCrawl import settings
@@ -38,7 +38,7 @@ class ProxycrawlPipeline(object):
         hashCode = hash.hexdigest()
         sql = f"""insert into {self.table}(ip, port, crawlTime, hashCode, spider) values("{item['ip']}","{item['port']}","{time.strftime('%Y-%m-%d',time.localtime())}","{hashCode}","proxy")"""
         cursor.execute(sql)
-        print('##############成功插入！##############')
+        logging.info('##############成功插入！##############')
     def handleErr(self, failure):
-        print('#####################')
+
         print(failure)
