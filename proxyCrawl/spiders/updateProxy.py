@@ -25,25 +25,27 @@ if results != []:
         proxy = {'http': fromUrl, 'https': fromUrl}
         toUrl = 'http://httpbin.org/ip'
         try:
-            html = requests.get(url=toUrl, proxies=proxy, timeout=(3, 10))
+            html = requests.get(url=toUrl, proxies=proxy, timeout=(0.1, 0.2))
         except Exception:
             logging.info('代理失效')
             continue
-        result = json.loads(html.text)['origin'].split(',')
-        if len(result) == 1:
-            logging.info('代理可用')
-            proxies.append(result[0])
+        if html.status_code == 200 and ('無效用戶' not in html.text):
+            print(html.text)
+            result = json.loads(html.text)['origin'].split(',')
+            if len(result) == 1:
+                logging.info('代理可用')
+                proxies.append(result[0])
     if len(proxies) < 180:
         sql = f"truncate table {tablename}"
         cursor.execute(sql)
         db.commit()
         cursor.close()
         db.close()
-        os.system('cd;cd proxyCrawl; scrapy crawl proxy')
+        os.system('cd /home/xiyujing/proxyCrawl; scrapy crawl proxy')
     else:
         time.sleep(600)
 else:
-    os.system('cd;cd proxyCrawl; scrapy crawl proxy')
+    os.system('cd /home/xiyujing/proxyCrawl; scrapy crawl proxy')
 
 
 

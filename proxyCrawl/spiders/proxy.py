@@ -37,7 +37,7 @@ class ProxySpider(scrapy.Spider):
 
 
     def parse_item(self, response):
-        if response.body != 'error':
+        if 'error' not in response.text:
             result = json.loads(response.text)['origin'].split(',')
             if len(result) == 1:
                 self.proxySet.append(result[0])

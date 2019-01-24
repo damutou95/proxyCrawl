@@ -7,6 +7,8 @@
 from twisted.internet.error import TimeoutError, ConnectionLost, TCPTimedOutError, ConnectionRefusedError, ConnectError
 from scrapy import signals
 from scrapy.http import Response
+import pymysql
+import random
 
 
 class ProxycrawlSpiderMiddleware(object):
@@ -104,3 +106,27 @@ class ProxycrawlDownloaderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+
+# class HttpProxyMiddleware(object):
+#
+#     def process_request(self, request, spider):
+#         host = '127.0.0.1'
+#         user = 'root'
+#         passwd = '18351962092'
+#         dbname = 'proxies'
+#         tablename = 'proxy'
+#         proxies = []
+#         db = pymysql.connect(host, user, passwd, dbname)
+#         cursor = db.cursor()
+#         sql = f"select * from {tablename}"
+#         cursor.execute(sql)
+#         results = cursor.fetchall()
+#         cursor.close()
+#         for row in results:
+#             ip = row[0]
+#             port = row[1]
+#             fromUrl = f"http://{ip}:{port}"
+#             proxies.append(fromUrl)
+#         proxy = random.choice(proxies)
+#         request.meta['proxy'] = proxy
