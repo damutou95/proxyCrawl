@@ -36,7 +36,7 @@ class ProxycrawlPipeline(object):
         hash = hashlib.md5()
         hash.update(s.encode('utf-8'))
         hashCode = hash.hexdigest()
-        sql = f"""insert into {self.table}(ip, port, crawlTime, hashCode, spider) values("{item['ip']}","{item['port']}","{time.strftime('%Y-%m-%d',time.localtime())}","{hashCode}","proxy")"""
+        sql = f"""insert into {self.table}(ip, port, crawlTime, hashCode, spider) values("{item['ip']}","{item['port']}","{time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())}","{hashCode}","proxy")"""
         cursor.execute(sql)
         logging.info('##############成功插入！##############')
     def handleErr(self, failure):

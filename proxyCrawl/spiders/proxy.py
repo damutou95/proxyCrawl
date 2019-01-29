@@ -16,7 +16,7 @@ class ProxySpider(scrapy.Spider):
 
     def start_requests(self):
         for url in self.start_urls:
-            yield Request(url, callback=self.parse, headers=self.headers)
+            yield Request(url, callback=self.parse, headers=self.headers, meta={'tag': 0})
 
     def parse(self, response):
         listPre = response.xpath('//tr')
@@ -31,7 +31,7 @@ class ProxySpider(scrapy.Spider):
             proxy = f"http://{item['ip']}:{item['port']}"
             url = 'http://httpbin.org/ip'
             try:
-                yield Request(url, callback=self.parse_item, meta={'proxy': proxy, 'item': item}, dont_filter=True)
+                yield Request(url, callback=self.parse_item, meta={'proxy': proxy, 'item': item, 'tag': 0}, dont_filter=True)
             except Exception:
                 continue
 

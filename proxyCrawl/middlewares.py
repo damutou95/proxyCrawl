@@ -9,6 +9,7 @@ from scrapy import signals
 from scrapy.http import Response
 import pymysql
 import random
+import logging
 
 
 class ProxycrawlSpiderMiddleware(object):
@@ -100,9 +101,13 @@ class ProxycrawlDownloaderMiddleware(object):
         # - return None: continue processing this exception
         # - return a Response object: stops process_exception() chain
         # - return a Request object: stops process_exception() chain
-        if isinstance(exception, (TimeoutError, ConnectionLost, TCPTimedOutError, ConnectionRefusedError, ConnectError, ConnectionError, AttributeError)):
-            response = Response(request=request, body='error')
-            return response
+        if isinstance(exception, (TimeoutError, ConnectionLost, TCPTimedOutError, ConnectionRefusedError, ConnectError)):
+            if request.meta['tag'] < 5:
+                request.meta['tag'] += 1
+                logging.info(f"""##################重新发送请求{request.meta['tag']}次！###########""")
+                return request
+            else:
+                logging.info('##############重试5次不成功，放弃请求！#############')
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
